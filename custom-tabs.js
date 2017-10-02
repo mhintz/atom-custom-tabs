@@ -3,7 +3,7 @@
 import path from 'path';
 import _ from 'underscore';
 import { allowUnsafeNewFunction } from 'loophole';
-import { CompositeDisposable } from 'atom';
+import { CompositeDisposable, TextEditor } from 'atom';
 
 const DEFAULT_TEMPLATE =
     '<%= filePath.split(path.sep).slice(-2).join(path.sep) %>';
@@ -62,7 +62,6 @@ export default {
                 let editorSubscriptions = new CompositeDisposable();
                 editorSubscriptions.add(
                     editor.onDidDestroy(() => {
-                        this.updateAllTabs();
                         editorSubscriptions.dispose();
                     })
                 );
@@ -78,6 +77,7 @@ export default {
                 this.updateAllTabs();
             })
         );
+
         this.subscriptions.add(
             atom.workspace.observePanes(pane => {
                 let paneSubscriptions = new CompositeDisposable();
@@ -88,6 +88,11 @@ export default {
                 );
                 paneSubscriptions.add(
                     pane.onDidMoveItem(() => {
+                        this.updateAllTabs();
+                    })
+                );
+                paneSubscriptions.add(
+                    pane.onDidRemoveItem(arg1 => {
                         this.updateAllTabs();
                     })
                 );
