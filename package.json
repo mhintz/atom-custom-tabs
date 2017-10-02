@@ -1,7 +1,7 @@
 {
   "name": "custom-tabs",
   "main": "./custom-tabs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Customize the titles of tabs",
   "repository": "https://github.com/mhintz/atom-custom-tabs",
   "license": "MIT",
